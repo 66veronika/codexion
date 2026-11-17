@@ -14,5 +14,10 @@
 
 int	main(int argc, char **argv)
 {
-	
+	t_data	data;
+
+	memset(&data, 0, sizeof(data));
+	if (parse_arguments(argc, argv, &data) != 0)
+		return (1);
+	return (0);
 }

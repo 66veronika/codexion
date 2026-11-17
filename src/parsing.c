@@ -3,30 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vskopova <vskopova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: veronikaskopova <veronikaskopova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 19:15:49 by vskopova          #+#    #+#             */
-/*   Updated: 2026/11/14 19:20:14 by vskopova         ###   ########.fr       */
+/*   Updated: 2026/11/14 19:53:58 by veronikasko      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int		is_valid_scheduler(char *str);
-int		validate_arguments(char **argv);
-void	assign_arguments(char **argv, t_data *data);
-int		is_valid_number(char *str);
+static int	is_valid_scheduler(char *str);
+static int	validate_arguments(char **argv);
+static void	assign_arguments(char **argv, t_data *data);
+static int	is_valid_number(char *str);
 
 int	parse_arguments(int argc, char **argv, t_data *data)
 {
 	if (argc != 9)
 	{
-		printf("Error: expected 8 arguments\n");
+		fprintf(stderr, "Error: expected 8 arguments\n");
 		return (1);
 	}
 	if (!validate_arguments(argv))
 		return (1);
 	assign_arguments(argv, data);
+	if (data->number_of_coders == 0)
+		return (fprintf(stderr, "Error: expected at least one coder\n"), 1);
 	return (0);
 }
 
@@ -36,7 +38,7 @@ static int	is_valid_scheduler(char *str)
 		return (1);
 	if (strcmp(str, "edf") == 0)
 		return (1);
-	printf("Error: invalid scheduler\n");
+	fprintf(stderr, "Error: invalid scheduler\n");
 	return (0);
 }
 
@@ -58,20 +60,35 @@ static int	validate_arguments(char **argv)
 static int	is_valid_number(char *str)
 {
 	int	i;
+	int	num;
 
 	if (!str || str[0] == '\0')
-		return (0);
+		return (fprintf(stderr, "Error: argument is empty\n"), 0);
 	i = 0;
+	num = 0;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (0);
+			return (fprintf(stderr, "Error: argument is not an integer\n"), 0);
+		if (num > (INT_MAX - (str[i] - '0')) / 10)
+			return (fprintf(stderr, "Number is too large\n"), 0);
+		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	i = 0;
-	while (str[i] == '0')
-		i++;
-	if (str[i] == '\0')
-		return (0);
 	return (1);
+}
+
+static void	assign_arguments(char **argv, t_data *data)
+{
+	data->number_of_coders = atoi(argv[1]);
+	data->time_to_burnout = atoi(argv[2]);
+	data->time_to_compile = atoi(argv[3]);
+	data->time_to_debug = atoi(argv[4]);
+	data->time_to_refactor = atoi(argv[5]);
+	data->number_of_compiles_required = atoi(argv[6]);
+	data->dongle_cooldown = atoi(argv[7]);
+	if (strcmp(argv[8], "fifo") == 0)
+		data->scheduler = FIFO;
+	else
+		data->scheduler = EDF;
 }
