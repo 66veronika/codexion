@@ -7,6 +7,7 @@ INCLUDES	= -Iinclude
 
 SRCS		=	src/main.c\
 				src/parsing.c\
+				src/coders.c\
 
 OBJS 		= $(SRCS:.c=.o)
 HEADERS 	= include/codexion.h
