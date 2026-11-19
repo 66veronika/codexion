@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   coders.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vskopova <vskopova@student.42.fr>          +#+  +:+       +#+        */
+/*   By: veronikaskopova <veronikaskopova@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 17:04:45 by vskopova          #+#    #+#             */
-/*   Updated: 2026/11/17 17:42:21 by vskopova         ###   ########.fr       */
+/*   Updated: 2026/11/18 12:50:52 by veronikasko      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
