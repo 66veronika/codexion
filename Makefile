@@ -9,6 +9,8 @@ SRCS		=	src/main.c\
 				src/parsing.c\
 				src/coders.c\
 				src/dongle.c \
+				src/simulation.c \
+				src/monitor.c \
 
 OBJS 		= $(SRCS:.c=.o)
 HEADERS 	= include/codexion.h

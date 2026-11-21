@@ -6,7 +6,7 @@
 /*   By: vskopova <vskopova@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/14 19:16:07 by vskopova          #+#    #+#             */
-/*   Updated: 2026/11/19 17:51:59 by vskopova         ###   ########.fr       */
+/*   Updated: 2026/11/21 21:00:37 by vskopova         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <limits.h>
+# include <time.h>
 
 typedef enum e_scheduler
 {
@@ -54,7 +55,7 @@ typedef struct s_data
 	t_coder			*coders;
 	t_dongle		*dongles;
 	long			start_time;
-	int				topped;
+	int				stopped;
 	pthread_mutex_t state_mutex;
 }	t_data;
 
@@ -62,5 +63,12 @@ int		parse_arguments(int argc, char **argv, t_data *data);
 int		init_coders(t_data *data);
 int		init_dongles(t_data *data);
 void	cleanup_dongles(t_data *data);
+int		init_simulation(t_data *data);
+int		simulation_stopped(t_data *data);
+void	cleanup_simulation(t_data *data);
+void	stop_simulation(t_data *data);
+void	set_start_time(t_data *data);
+long	get_time_ms(void);
+void	update_compile_time(t_data *data, t_coder *coder);
 
 #endif
